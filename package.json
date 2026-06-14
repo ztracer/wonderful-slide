@@ -1,6 +1,6 @@
 {
   "name": "@traz1r/wonderful-slide",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AI Native Slidev deck workflow for technical presentations - includes deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools",
   "type": "module",
   "exports": {
@@ -8,12 +8,12 @@
     "./scripts/*": "./scripts/*.mjs"
   },
   "bin": {
-    "wfslide-language": "./scripts/language-check.mjs",
-    "wfslide-style": "./scripts/style-line-report.mjs",
-    "wfslide-class": "./scripts/class-usage-scan.mjs",
-    "wfslide-research": "./scripts/research-audit.mjs",
-    "wfslide-artifact": "./scripts/artifact-scan.mjs",
-    "wfslide-export": "./scripts/export-check.mjs"
+    "wfslide-language": "./bin/wfslide-language",
+    "wfslide-style": "./bin/wfslide-style",
+    "wfslide-class": "./bin/wfslide-class",
+    "wfslide-research": "./bin/wfslide-research",
+    "wfslide-artifact": "./bin/wfslide-artifact",
+    "wfslide-export": "./bin/wfslide-export"
   },
   "files": [
     "SKILL.md",
