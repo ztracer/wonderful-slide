@@ -1,6 +1,6 @@
 {
   "name": "@traz1r/wonderful-slide",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "AI Native Slidev deck workflow for technical presentations - includes deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools",
   "type": "module",
   "exports": {
@@ -24,9 +24,6 @@
     "research-audit": "node scripts/research-audit.mjs",
     "artifact-scan": "node scripts/artifact-scan.mjs",
     "export-check": "node scripts/export-check.mjs"
-  },
-  "bin": {
-    "wonderful-slide": "./scripts/install.mjs"
   },
   "keywords": [
     "slidev",

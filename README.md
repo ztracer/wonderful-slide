@@ -16,10 +16,11 @@ AI Native Slidev deck workflow for technical presentations. Includes from-zero d
 
 ### For Claude Code Users (Recommended)
 
-Install the skill directly with npx - no manual copying needed:
+Install the skill for Claude Code:
 
 ```bash
-npx -y @traz1r/wonderful-slide
+npm install -D @traz1r/wonderful-slide
+npm run install-skill
 ```
 
 Restart Claude Code, then you can use the skill:
