@@ -1,6 +1,6 @@
-# @ztracer/wonderful-slide
+# @traz1r/wonderful-slide
 
-[![npm version](https://badge.fury.io/js/%40ztracer%2Fwonderful-slide.svg)](https://www.npmjs.com/package/@ztracer/wonderful-slide)
+[![npm version](https://badge.fury.io/js/%40traz1r%2Fwonderful-slide.svg)](https://www.npmjs.com/package/@traz1r/wonderful-slide)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 AI Native Slidev deck workflow for technical presentations. Includes from-zero deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools.
@@ -15,13 +15,13 @@ AI Native Slidev deck workflow for technical presentations. Includes from-zero d
 ## Installation
 
 ```bash
-npm install @ztracer/wonderful-slide --save-dev
+npm install @traz1r/wonderful-slide --save-dev
 ```
 
 Or globally for CLI access:
 
 ```bash
-npm install -g @ztracer/wonderful-slide
+npm install -g @traz1r/wonderful-slide
 ```
 
 ## CLI Tools
@@ -91,7 +91,7 @@ This package is designed as a [Claude Code](https://claude.ai/code) skill. To us
 
 1. Copy the skill directory structure:
 ```bash
-cp -r node_modules/@ztracer/wonderful-slide ~/.claude/skills/wonderful-slide
+cp -r node_modules/@traz1r/wonderful-slide ~/.claude/skills/wonderful-slide
 ```
 
 2. The skill will be available for use in Claude Code sessions

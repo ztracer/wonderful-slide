@@ -1,5 +1,5 @@
 {
-  "name": "@ztracer/wonderful-slide",
+  "name": "@traz1r/wonderful-slide",
   "version": "1.0.0",
   "description": "AI Native Slidev deck workflow for technical presentations - includes deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools",
   "type": "module",
@@ -17,6 +17,8 @@
   },
   "files": [
     "SKILL.md",
+    "README.md",
+    "LICENSE",
     "scripts/*.mjs",
     "references/*.md",
     "agents/*.yaml"
