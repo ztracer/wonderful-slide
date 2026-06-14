@@ -18,12 +18,6 @@ AI Native Slidev deck workflow for technical presentations. Includes from-zero d
 npm install @traz1r/wonderful-slide --save-dev
 ```
 
-Or globally for CLI access:
-
-```bash
-npm install -g @traz1r/wonderful-slide
-```
-
 ## CLI Tools
 
 This package includes several CLI tools for Slidev deck quality checks:
@@ -33,11 +27,7 @@ This package includes several CLI tools for Slidev deck quality checks:
 Scan for defensive phrasing, abrupt method transitions, and dense technical copy:
 
 ```bash
-# npm script
 npm run language-check <deck-root> [--range <pages>] [--fail-on-findings]
-
-# global CLI
-wfslide-language <deck-root> [--range <pages>] [--fail-on-findings]
 ```
 
 ### Style Line Report
@@ -46,7 +36,6 @@ Report global CSS and Vue scoped-style line counts:
 
 ```bash
 npm run style-report <deck-root>
-wfslide-style <deck-root>
 ```
 
 ### Class Usage Scan
@@ -55,7 +44,6 @@ Report CSS classes defined in CSS/Vue styles that are not referenced:
 
 ```bash
 npm run class-scan <deck-root> [--fail-on-unused]
-wfslide-class <deck-root> [--fail-on-unused]
 ```
 
 ### Research Audit
@@ -64,7 +52,6 @@ Verify that `index.md` exists with proper sections:
 
 ```bash
 npm run research-audit <deck-root>
-wfslide-research <deck-root>
 ```
 
 ### Artifact Scan
@@ -73,7 +60,6 @@ Report prompt artifacts and planning language in visible content:
 
 ```bash
 npm run artifact-scan <deck-root> [--fail-on-findings]
-wfslide-artifact <deck-root> [--fail-on-findings]
 ```
 
 ### Export Check
@@ -82,7 +68,6 @@ Export slides to PNG and check for errors:
 
 ```bash
 npm run export-check <deck-root> --range <pages> [--output <dir>] [--expect <n>]
-wfslide-export <deck-root> --range <pages> [--output <dir>] [--expect <n>]
 ```
 
 ## Usage with Claude Code
