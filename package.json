@@ -17,12 +17,16 @@
     "agents/*.yaml"
   ],
   "scripts": {
+    "install-skill": "node scripts/install.mjs",
     "language-check": "node scripts/language-check.mjs",
     "style-report": "node scripts/style-line-report.mjs",
     "class-scan": "node scripts/class-usage-scan.mjs",
     "research-audit": "node scripts/research-audit.mjs",
     "artifact-scan": "node scripts/artifact-scan.mjs",
     "export-check": "node scripts/export-check.mjs"
+  },
+  "bin": {
+    "wonderful-slide": "./scripts/install.mjs"
   },
   "keywords": [
     "slidev",

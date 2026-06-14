@@ -12,10 +12,34 @@ AI Native Slidev deck workflow for technical presentations. Includes from-zero d
 - **Visual System Support**: Componentized diagrams, Vue dynamic/interactive visuals, and split CSS ownership
 - **Build Verification**: Export checking, error scanning, and presentation-size inspection
 
-## Installation
+## Quick Start
+
+### For Claude Code Users (Recommended)
+
+Install the skill directly with npx - no manual copying needed:
 
 ```bash
-npm install @traz1r/wonderful-slide --save-dev
+npx -y @traz1r/wonderful-slide
+```
+
+Restart Claude Code, then you can use the skill:
+
+> "Create a technical presentation about [topic] using wonderful-slide"
+
+### For Tool Users
+
+Install as a dev dependency:
+
+```bash
+npm install -D @traz1r/wonderful-slide
+```
+
+Then run quality checks:
+
+```bash
+npm run language-check <deck-root>
+npm run style-report <deck-root>
+npm run class-scan <deck-root> --fail-on-unused
 ```
 
 ## CLI Tools
