@@ -1,0 +1,60 @@
+{
+  "name": "@ztracer/wonderful-slide",
+  "version": "1.0.0",
+  "description": "AI Native Slidev deck workflow for technical presentations - includes deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./scripts/*": "./scripts/*.mjs"
+  },
+  "bin": {
+    "wonderful-slide-language-check": "./scripts/language-check.mjs",
+    "wonderful-slide-style-report": "./scripts/style-line-report.mjs",
+    "wonderful-slide-class-scan": "./scripts/class-usage-scan.mjs",
+    "wonderful-slide-research-audit": "./scripts/research-audit.mjs",
+    "wonderful-slide-artifact-scan": "./scripts/artifact-scan.mjs",
+    "wonderful-slide-export-check": "./scripts/export-check.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "scripts/*.mjs",
+    "references/*.md",
+    "agents/*.yaml"
+  ],
+  "scripts": {
+    "language-check": "node scripts/language-check.mjs",
+    "style-report": "node scripts/style-line-report.mjs",
+    "class-scan": "node scripts/class-usage-scan.mjs",
+    "research-audit": "node scripts/research-audit.mjs",
+    "artifact-scan": "node scripts/artifact-scan.mjs",
+    "export-check": "node scripts/export-check.mjs"
+  },
+  "keywords": [
+    "slidev",
+    "presentation",
+    "slides",
+    "markdown",
+    "vue",
+    "deck",
+    "technical",
+    "workflow",
+    "linter",
+    "quality-gates"
+  ],
+  "author": "ztracer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztracer/wonderful-slide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ztracer/wonderful-slide/issues"
+  },
+  "homepage": "https://github.com/ztracer/wonderful-slide#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

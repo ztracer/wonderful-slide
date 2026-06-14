@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wonderful Slide"
+  short_description: "Create and polish AI-native Slidev decks"
+  default_prompt: "Use $wonderful-slide to create, branch, polish, and verify an AI-native Slidev technical deck."

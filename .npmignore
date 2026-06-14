@@ -1,0 +1,37 @@
+# Ignore development and test files
+*.log
+*.tmp
+*.test
+*.spec
+coverage/
+test-results/
+node_modules/
+.git/
+.gitignore
+.npmrc
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore build output
+dist/
+.build/
+output/
+
+# Ignore CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Ignore documentation source (use published README)
+docs/
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Ignore memory and cache
+.claude/
+.cache/
+.DS_Store
