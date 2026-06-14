@@ -4,13 +4,13 @@
   "description": "AI Native Slidev deck workflow for technical presentations - includes deck creation, research-backed narrative shaping, slide drafting, visual quality review, and build verification tools",
   "type": "module",
   "exports": {
-    ".": "./index.js",
     "./scripts/*": "./scripts/*.mjs"
   },
   "files": [
     "SKILL.md",
     "README.md",
     "LICENSE",
+    "CHANGELOG.md",
     "bin/*",
     "scripts/*.mjs",
     "references/*.md",
@@ -36,7 +36,7 @@
     "linter",
     "quality-gates"
   ],
-  "author": "ztracer",
+  "author": "traz1r",
   "license": "MIT",
   "repository": {
     "type": "git",

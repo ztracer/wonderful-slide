@@ -103,7 +103,7 @@ cp -r node_modules/@traz1r/wonderful-slide ~/.claude/skills/wonderful-slide
 
 ## License
 
-MIT © ztracer
+MIT © traz1r
 
 ## Contributing
 
@@ -112,3 +112,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Repository
 
 https://github.com/ztracer/wonderful-slide
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and changes.
