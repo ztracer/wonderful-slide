@@ -20,7 +20,7 @@ Install the skill for Claude Code:
 
 ```bash
 npm install -D @traz1r/wonderful-slide
-npm run install-skill
+npx wonderful-slide
 ```
 
 Restart Claude Code, then you can use the skill:
@@ -35,12 +35,18 @@ Install as a dev dependency:
 npm install -D @traz1r/wonderful-slide
 ```
 
-Then run quality checks:
+Then run quality checks using `npx`:
 
 ```bash
-npm run language-check <deck-root>
-npm run style-report <deck-root>
-npm run class-scan <deck-root> --fail-on-unused
+npx wfslide-language <deck-root>
+npx wfslide-style <deck-root>
+npx wfslide-class <deck-root>
+```
+
+Or if you want to run with `--fail-on-unused` options, use the full command:
+
+```bash
+node node_modules/@traz1r/wonderful-slide/scripts/class-usage-scan.mjs <deck-root> --fail-on-unused
 ```
 
 ## CLI Tools
@@ -52,7 +58,7 @@ This package includes several CLI tools for Slidev deck quality checks:
 Scan for defensive phrasing, abrupt method transitions, and dense technical copy:
 
 ```bash
-npm run language-check <deck-root> [--range <pages>] [--fail-on-findings]
+npx wfslide-language <deck-root> [--range <pages>] [--fail-on-findings]
 ```
 
 ### Style Line Report
@@ -60,7 +66,7 @@ npm run language-check <deck-root> [--range <pages>] [--fail-on-findings]
 Report global CSS and Vue scoped-style line counts:
 
 ```bash
-npm run style-report <deck-root>
+npx wfslide-style <deck-root>
 ```
 
 ### Class Usage Scan
@@ -68,7 +74,7 @@ npm run style-report <deck-root>
 Report CSS classes defined in CSS/Vue styles that are not referenced:
 
 ```bash
-npm run class-scan <deck-root> [--fail-on-unused]
+npx wfslide-class <deck-root> [--fail-on-unused]
 ```
 
 ### Research Audit
@@ -76,7 +82,7 @@ npm run class-scan <deck-root> [--fail-on-unused]
 Verify that `index.md` exists with proper sections:
 
 ```bash
-npm run research-audit <deck-root>
+npx wfslide-research <deck-root>
 ```
 
 ### Artifact Scan
@@ -84,7 +90,7 @@ npm run research-audit <deck-root>
 Report prompt artifacts and planning language in visible content:
 
 ```bash
-npm run artifact-scan <deck-root> [--fail-on-findings]
+npx wfslide-artifact <deck-root> [--fail-on-findings]
 ```
 
 ### Export Check
@@ -92,19 +98,23 @@ npm run artifact-scan <deck-root> [--fail-on-findings]
 Export slides to PNG and check for errors:
 
 ```bash
-npm run export-check <deck-root> --range <pages> [--output <dir>] [--expect <n>]
+npx wfslide-export <deck-root> --range <pages> [--output <dir>] [--expect <n>]
 ```
 
 ## Usage with Claude Code
 
 This package is designed as a [Claude Code](https://claude.ai/code) skill. To use it:
 
-1. Copy the skill directory structure:
+1. Install and run the installer:
+
 ```bash
-cp -r node_modules/@traz1r/wonderful-slide ~/.claude/skills/wonderful-slide
+npm install -D @traz1r/wonderful-slide
+npx wonderful-slide
 ```
 
-2. The skill will be available for use in Claude Code sessions
+2. Restart Claude Code
+
+3. The skill will be available for use in Claude Code sessions
 
 ## Workflow Overview
 
