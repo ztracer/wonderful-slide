@@ -2,9 +2,13 @@
 
 Use this guide when a Slidev deck needs more than small copy edits. The goal is a technical presentation that is shaped for a live audience, not a document broken into pages.
 
-## 1. Branch Before Context
+## 1. Intake Before Branch
 
-Choose the work branch before reading or editing broadly. Use `references/intake-and-branching.md` for from-zero decks, major rewrites, vague requests, unclear visual direction, and audits.
+Before reading or editing broadly, collect what the user wants and has. Use `references/structured-intake.md` for new decks and major rewrites: a batch of structured questions with pre-written options, a materials upload invitation, and a confirmation gate.
+
+Then choose the work branch using `references/intake-and-branching.md`: from-zero deck, existing-deck rewrite, narrow edit, audit, or unclear visual direction. Pick the smallest branch that satisfies the request.
+
+Also choose a tier (Light / Standard / Conference) based on stakes, audience, and format. This determines which workflow steps are mandatory.
 
 Do not begin a from-zero deck by trying to read nonexistent `slides.md`, `pages/`, `components/`, or `styles/`. Create the minimum working context first, then expand.
 
@@ -14,7 +18,7 @@ For from-zero decks, scaffold lightweight working notes before writing many slid
 
 - `PRODUCT.md`: audience, purpose, success criteria, anti-references, accessibility baseline.
 - `DESIGN.md`: visual direction, color, typography, layout rules, component expectations, anti-patterns.
-- `index.md`: sources, glossary, claim map, example inventory, tool notes, and the slide-question sequence.
+- `index.md`: sources, glossary, claim map, example inventory, tool notes, and the typed slide-question sequence.
 
 For existing decks, inventory only after the branch says a deck exists:
 
@@ -28,22 +32,27 @@ Write or revise these notes before large slide edits when the audience, tone, or
 
 For new decks, major rewrites, and any deck criticized as vague or shallow, create or refresh `index.md` before writing slides. Use `references/research-first.md`.
 
-`index.md` must capture sources, glossary, claim map, example inventory, tool notes, and the slide-question sequence. It is the place for exact links, caveats, source-to-claim mapping, and local verification output. The slide deck should read like a talk; `index.md` should preserve the evidence behind it.
+`index.md` must capture sources, glossary, claim map, example inventory, tool notes, and the slide-question sequence with question types. It is the place for exact links, caveats, source-to-claim mapping, and local verification output. The slide deck should read like a talk; `index.md` should preserve the evidence behind it.
 
 Do not draft a language/tool deck from memory when primary sources or local executable examples are available.
 
 ## 4. Narrative Before Layout
 
-Turn source material into a question sequence:
+Turn source material into a question sequence using the question taxonomy from `references/research-first.md`:
 
-- What does the audience need to understand first?
-- What misconception or missing intuition blocks the next idea?
-- What concrete example anchors the abstract term?
-- What result, limitation, or decision should remain in memory?
+| Type | Job | Example |
+|------|-----|---------|
+| Foundational | Define an object or boundary | "What is Binder?" |
+| Mechanism | Explain how something works | "How does a Binder transaction cross processes?" |
+| Evidence | Show what was found | "What crash patterns did NASS uncover?" |
+| Contrast | Compare two approaches | "Atlas vs POIROT: what changed?" |
+| Takeaway | State conclusion or open problem | "What does our work add?" |
 
-Prefer a route like `intuition -> object -> mechanism -> representative work -> contribution -> takeaway`. Adjust the route to the talk, but keep cause and transition explicit.
+Prefer a route like `Foundational → Mechanism → Evidence → Contrast → Takeaway`. Adjust to the talk, but keep cause and transition explicit. Check that adjacent slides create narrative tension: if slide N+1 doesn't depend on slide N, the tension is weak.
 
-For first-principles technical talks, require the route `intuition -> formal object -> tool behavior -> example -> limitation -> practice`.
+For first-principles technical talks, require the route `intuition → formal object → tool behavior → example → limitation → practice`.
+
+The question sequence should contain more Mechanism and Evidence questions than Foundational ones. A deck that only defines terms is a glossary, not a talk.
 
 ## 5. Two-Slide Showcase Before Full Expansion
 
@@ -83,7 +92,7 @@ Do not componentize every small text block. A component should reduce real compl
 
 For animated or interactive visuals, read `vue-dynamic-visuals.md` before implementation. Decide the static export frame first, then model state, then add motion. The slide must still communicate if timers never run.
 
-If the talk explains a mechanism such as a model checker, state machine, protocol, scheduler, parser, or runtime, include at least one stateful Vue visual that animates the mechanism. Static cards are insufficient for mechanism-first teaching.
+If the talk explains a mechanism such as a protocol, scheduler, parser, runtime, or IPC path, include at least one stateful Vue visual that animates the mechanism. Static cards are insufficient for mechanism-first teaching.
 
 ## 8. CSS Owns Presentation Boundaries
 

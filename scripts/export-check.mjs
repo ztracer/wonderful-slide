@@ -3,39 +3,20 @@ import { spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import { parseArgs, usage } from './lib/args.mjs'
 
 const rawArgs = process.argv.slice(2)
-
-function parseArgs(args) {
-  const options = {}
-  let root = '.'
-  let rootSet = false
-
-  for (let index = 0; index < args.length; index += 1) {
-    const arg = args[index]
-    if (arg.startsWith('--')) {
-      const [name, inlineValue] = arg.slice(2).split('=', 2)
-      if (inlineValue !== undefined) {
-        options[name] = inlineValue
-      } else {
-        const next = args[index + 1]
-        if (next && !next.startsWith('--')) {
-          options[name] = next
-          index += 1
-        } else {
-          options[name] = true
-        }
-      }
-      continue
-    }
-
-    if (!rootSet) {
-      root = arg
-      rootSet = true
-    }
-  }
-
-  return { root: path.resolve(root), options }
+if (rawArgs.includes('-h') || rawArgs.includes('--help')) {
+  console.error(usage('node scripts/export-check.mjs <deck-root>', [
+    '--range <pages>',
+    '[--output <dir>]',
+    '[--expect <n>]',
+    '[--entry <slides.md>]',
+    '[--log <path>]',
+    '[--wait <ms>]',
+    '[--timeout <ms>]',
+  ]))
+  process.exit(0)
 }
 
 function packageRunner(root) {
@@ -109,7 +90,15 @@ const { root, options } = parseArgs(rawArgs)
 const range = options.range
 
 if (!range) {
-  console.error('Usage: node scripts/export-check.mjs <deck-root> --range <pages> [--output <dir>] [--expect <n>] [--entry <slides.md>]')
+  console.error(usage('node scripts/export-check.mjs <deck-root>', [
+    '--range <pages>',
+    '[--output <dir>]',
+    '[--expect <n>]',
+    '[--entry <slides.md>]',
+    '[--log <path>]',
+    '[--wait <ms>]',
+    '[--timeout <ms>]',
+  ]))
   process.exit(2)
 }
 
@@ -118,8 +107,8 @@ const output = path.resolve(
   options.output || path.join('/tmp', `wonderful-slide-export-${path.basename(root)}-${Date.now()}`),
 )
 const logPath = path.resolve(root, options.log || path.join(output, 'slidev-export.log'))
-const wait = String(options.wait || 1000)
-const timeout = String(options.timeout || 120000)
+const wait = Number(options.wait) || 1000
+const timeout = Number(options.timeout) || 120000
 const expected = options.expect ? Number(options.expect) : expectedFromRange(range)
 
 mkdirSync(output, { recursive: true })

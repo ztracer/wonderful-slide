@@ -1,4 +1,28 @@
 interface:
   display_name: "Wonderful Slide"
-  short_description: "Create and polish AI-native Slidev decks"
-  default_prompt: "Use $wonderful-slide to create, branch, polish, and verify an AI-native Slidev technical deck."
+  short_description: "Create, redesign, polish, and verify AI-native Slidev technical decks"
+  default_prompt: "Use wonderful-slide to create, branch, polish, and verify an AI-native Slidev technical deck. Follow the workflow: structured intake → branch selection → context notes → research dossier → narrative map → two-slide showcase → slide draft → language pass → visual system → componentize → style ownership → verify by scope."
+triggers:
+  - "创建 Slidev deck"
+  - "制作/设计 技术演示/幻灯片"
+  - "改写/重构/润色 Slidev deck"
+  - "审查/审计 deck 质量"
+  - "给 deck 加动画/交互/Vue 组件"
+  - "检查 deck 投影/导出/构建"
+capabilities:
+  - From-zero deck creation with structured intake
+  - Existing deck rewrite, polish, and audit
+  - Research-backed narrative shaping with index.md dossier
+  - Question taxonomy (Foundational/Mechanism/Evidence/Contrast/Takeaway) with narrative tension
+  - Two-slide showcase to lock visual grammar before full expansion
+  - Vue component creation for animated diagrams, state machines, and interactive visuals
+  - CSS ownership splitting (tokens/base/utilities/chapter/scoped)
+  - Chinese technical talk quality gates and Simplified Chinese font verification
+  - Build, export, and visual verification with automated scripts
+  - Prompt artifact scanning, language quality checking, CSS usage auditing
+delegation:
+  librarian: "Verify tool versions, API claims, paper details during source/facts gate"
+  explorer: "Find existing deck files, search codebase for examples during context notes"
+  designer: "Visual system design, component styling, layout polish"
+  fixer: "Bounded mechanical edits (CSS renames, bulk copy fixes) that don't change design intent"
+  oracle: "Architecture review, narrative review, quality gate review after narrative map and before claiming completion"

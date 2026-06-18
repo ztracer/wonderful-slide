@@ -29,7 +29,6 @@ output/
 # Ignore documentation source (use published README)
 docs/
 CONTRIBUTING.md
-CHANGELOG.md
 
 # Ignore memory and cache
 .claude/

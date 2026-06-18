@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'bin/**'
+      - 'references/**'
+      - 'SKILL.md'
+      - 'package.json'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [main]
+
+jobs:
+  script-health:
+    name: Script health (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: All scripts parse and respond to --help
+        run: |
+          set -e
+          for script in \
+            artifact-scan.mjs class-usage-scan.mjs env-check.mjs export-check.mjs \
+            init-research.mjs language-check.mjs notes-check.mjs research-audit.mjs \
+            style-line-report.mjs install.mjs
+          do
+            echo "--- scripts/$script --help ---"
+            node "scripts/$script" --help
+          done
+
+  verify-against-deck:
+    name: Verify against test deck (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Create test deck skeleton
+        run: |
+          mkdir -p /tmp/test-deck/styles /tmp/test-deck/components
+          cat > /tmp/test-deck/package.json << 'JSON'
+          {
+            "name": "test-deck",
+            "private": true,
+            "scripts": { "build": "slidev build" },
+            "dependencies": {
+              "@slidev/cli": "^52.0.0",
+              "@slidev/theme-apple-basic": "^0.25.0"
+            },
+            "devDependencies": {
+              "playwright-chromium": "^1.50.0"
+            }
+          }
+          JSON
+
+      - name: Generate index.md skeleton
+        run: node scripts/init-research.mjs /tmp/test-deck
+
+      - name: Verify init-research creates index.md
+        run: test -f /tmp/test-deck/index.md
+
+      - name: Run env-check on test deck (should warn about missing slidev CLI)
+        run: node scripts/env-check.mjs /tmp/test-deck || true
+
+      - name: Run research-audit on test deck (skeleton has sections, few links)
+        run: node scripts/research-audit.mjs /tmp/test-deck || true
+
+      - name: Run artifact-scan on skill files (self-check)
+        run: node scripts/artifact-scan.mjs . || true
+
+      - name: Run language-check on skill files (self-check)
+        run: node scripts/language-check.mjs . || true
+
+      - name: Run style-line-report on test deck
+        run: node scripts/style-line-report.mjs /tmp/test-deck || true
+
+      - name: Run class-usage-scan on test deck
+        run: node scripts/class-usage-scan.mjs /tmp/test-deck || true
+
+  strict-gates:
+    name: Strict gates (PR only)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Artifact scan (strict)
+        run: node scripts/artifact-scan.mjs . --fail-on-findings
+        continue-on-error: true
+
+      - name: Language check (strict)
+        run: node scripts/language-check.mjs . --fail-on-findings
+        continue-on-error: true

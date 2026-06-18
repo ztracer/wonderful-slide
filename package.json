@@ -17,13 +17,13 @@
     "agents/*.yaml"
   ],
   "bin": {
-    "wonderful-slide": "./bin/wonderful-slide",
-    "wfslide-artifact": "./bin/wfslide-artifact",
-    "wfslide-class": "./bin/wfslide-class",
-    "wfslide-export": "./bin/wfslide-export",
-    "wfslide-language": "./bin/wfslide-language",
-    "wfslide-research": "./bin/wfslide-research",
-    "wfslide-style": "./bin/wfslide-style"
+    "wonderful-slide": "bin/wonderful-slide",
+    "wfslide-artifact": "bin/wfslide-artifact",
+    "wfslide-class": "bin/wfslide-class",
+    "wfslide-export": "bin/wfslide-export",
+    "wfslide-language": "bin/wfslide-language",
+    "wfslide-research": "bin/wfslide-research",
+    "wfslide-style": "bin/wfslide-style"
   },
   "scripts": {
     "install-skill": "node scripts/install.mjs",

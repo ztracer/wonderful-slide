@@ -2,44 +2,48 @@
 
 Use this guide before creating, rewriting, polishing, or auditing a Slidev technical deck when the scope is not already narrow and obvious. The goal is to choose the right path before reading too much or editing too much.
 
+## Pre-Step: Structured Intake
+
+For new decks (Branch A) and major rewrites (Branch B), run `references/structured-intake.md` **before** choosing a branch. The intake collects user material, audience parameters, visual preferences, and produces a confirmed intake summary. This prevents building on silent assumptions.
+
+Skip the structured intake for narrow edits (Branch C), audits (Branch D), or when the user has already provided a detailed brief that answers the intake questions.
+
+## Tier Selection
+
+Not every deck needs the full workflow. Choose a tier based on stakes, audience, and format. The tier determines which steps are mandatory vs optional.
+
+| Tier | When | Mandatory | Optional |
+|------|------|-----------|----------|
+| **Light** | Internal 5-10 slide quick share, team update, informal walkthrough | Intake summary (oral, not written), outline as questions, slide draft, build check | index.md, two-slide showcase, full language pass, CSS ownership audit, PNG export |
+| **Standard** | 15-25 slide technical talk, conference submission, public sharing | Full intake, index.md, question sequence with types, two-slide showcase, language pass, visual system, verify by scope | Vue components (only if diagrams need them), export check (recommended) |
+| **Conference** | 30+ slide keynote, invited talk, recorded/archived talk, multi-speaker deck | Everything: full intake, index.md, question taxonomy + tension check, two-slide showcase, language + artifact scan, visual system + componentize, CSS ownership audit, PNG export + live check | — |
+
+When in doubt, start at Light and upgrade when the deck deserves it. A Light deck that turns into a conference talk should re-run intake and index.md before expanding.
+
 ## Branch Table
 
-| Branch | Trigger | First action | Skip |
-| --- | --- | --- | --- |
-| A. From-zero deck | User asks to create a new talk/deck, no usable `slides.md` exists, or the repo has no deck structure | Clarify intent, write short assumptions, create lightweight `PRODUCT.md`, `DESIGN.md`, and `index.md`, then outline and make a two-slide showcase | Broad inventory of nonexistent `slides.md`, `pages/`, `components/`, `styles/` |
-| B. Existing-deck major rewrite | User asks to redesign, restructure, deepen, polish, or rewrite an existing deck | Inventory existing deck files and diagnose whether the main problem is narrative, research, language, visual system, Vue, CSS, or export | From-zero scaffold |
-| C. Narrow edit | User names a slide range, component, copy issue, style bug, or small fix | Read only the relevant Markdown, component, style, and nearby context | Long intake, full `index.md` rebuild, broad visual exploration |
-| D. Audit/verification | User asks for review, audit, readiness, build/export check, or issue list | Do not edit by default; inspect and report findings by category | Drafting new slides unless explicitly asked |
-| E. Unclear visual direction | User wants a deck but gives no style, audience energy, reference, or visual constraints | Produce three concise visual/narrative direction briefs, then let the chosen or mixed direction feed the two-slide showcase | Blindly choosing one generic style |
+| Branch | Trigger | Tier | First action | Skip |
+| --- | --- | --- | --- | --- |
+| A. From-zero deck | User asks to create a new talk/deck, no usable `slides.md` exists, or the repo has no deck structure | Any | Run structured intake → confirm → scaffold PRODUCT.md, DESIGN.md, index.md → outline + two-slide showcase | Broad inventory of nonexistent files |
+| B. Existing-deck major rewrite | User asks to redesign, restructure, deepen, polish, or rewrite an existing deck | Standard+ | Run structured intake (focus on what's wrong with current deck) → inventory existing files → diagnose root problem | From-zero scaffold |
+| C. Narrow edit | User names a slide range, component, copy issue, style bug, or small fix | Any | Read only the relevant Markdown, component, style, and nearby context | Full intake, index.md rebuild, broad visual exploration |
+| D. Audit/verification | User asks for review, audit, readiness, build/export check, or issue list | Any | Do not edit by default; inspect and report findings by category | Drafting new slides unless explicitly asked |
+| E. Unclear visual direction | User wants a deck but gives no style, audience energy, reference, or visual constraints | Standard+ | Produce three concise visual/narrative direction briefs, then let the chosen or mixed direction feed the two-slide showcase | Blindly choosing one generic style |
 
 If several branches apply, choose the smallest branch that can satisfy the user. Upgrade scope only when a defect cannot be fixed locally.
 
-## From-Zero Deck Intake
-
-For a new deck, learn or infer these before drafting many slides:
-
-- Topic and exact title if known.
-- Audience, prior knowledge, and setting.
-- Talk duration and expected slide count.
-- Language for visible copy and speaker notes.
-- Source material: papers, docs, code, experiment logs, notes, links, or user-provided outline.
-- Required points, taboo points, and expected takeaway.
-- Final delivery expectation: local Slidev deck, exportable PNG/PDF, live talk rehearsal, or editable source for later work.
-
-Ask a concise batch of questions when these are missing and the user is available. If the user says to proceed or does not answer, continue with explicit assumptions in `PRODUCT.md`, `DESIGN.md`, and `index.md`; do not keep asking instead of producing a visible path.
-
 ## From-Zero Sequence
 
-Use this order for Branch A:
+For Branch A, `references/structured-intake.md` handles the full intake flow (batch questions with options → materials upload → confirmation gate). After confirmation:
 
-1. Write short assumptions in `PRODUCT.md`: audience, purpose, success criteria, constraints, and accessibility baseline.
-2. Write short design intent in `DESIGN.md`: tone, typography direction, color semantics, layout rhythm, motion expectations, and anti-patterns.
-3. Create `index.md` using `research-first.md`: sources, glossary, claim map, example inventory, tool notes, and slide-question sequence.
-4. Draft an outline as audience questions before slide copy.
-5. Build a two-slide showcase: cover plus the slide that carries the hardest mechanism, example, or core claim.
+1. Write `PRODUCT.md` (audience, purpose, success criteria, constraints, accessibility).
+2. Write `DESIGN.md` (tone, typography, color, layout, motion, anti-patterns).
+3. Create `index.md` using `references/research-first.md` (sources, glossary, claim map, examples, tool notes, typed question sequence).
+4. Draft the outline as typed audience questions with tension check.
+5. Build a two-slide showcase (cover + hardest mechanism/claim slide).
 6. Verify the showcase visually before expanding to the full deck.
 
-The two-slide showcase is mandatory for from-zero decks and for any major deck expected to have 5 or more slides. It prevents a full-deck rewrite when the narrative or visual grammar is wrong.
+The two-slide showcase is mandatory for from-zero decks and major decks with 5+ planned slides. It prevents a full-deck rewrite.
 
 ## Existing Deck Inventory
 
@@ -53,7 +57,7 @@ Read the smallest useful set:
 - `styles/*.css` and `pages/styles/*.css` for token ownership, global debt, and chapter styling.
 - Package scripts and config only when build, export, or Slidev behavior matters.
 
-For major rewrites, refresh `index.md` and the slide-question sequence before changing many slides. For narrow edits, keep inventory local to the touched range.
+For major rewrites, run the structured intake first (focusing on what the user wants to change), then refresh `index.md` and the slide-question sequence before changing many slides. For narrow edits, keep inventory local to the touched range.
 
 ## Visual Direction Consultant Mode
 
@@ -75,7 +79,7 @@ After the user chooses or mixes directions, apply it to the two-slide showcase. 
 For Branch D, report findings before summaries:
 
 - Research: unsupported claims, stale sources, missing caveats, weak examples.
-- Narrative: missing audience questions, weak transitions, repeated slide jobs.
+- Narrative: missing audience questions, weak tension between slides (same-type adjacency), repeated slide jobs.
 - Language: defensive phrasing, abrupt method choices, dense visible copy, prompt artifacts.
 - Visual system: inconsistent semantic colors, repeated gray cards, weak hierarchy.
 - Vue/components: brittle props, blank export frames, unsafe indexes, timer cleanup.

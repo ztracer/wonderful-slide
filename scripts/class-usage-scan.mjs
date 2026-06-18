@@ -1,72 +1,19 @@
 #!/usr/bin/env node
-import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import { walk } from './lib/walk.mjs'
+import { parseArgs } from './lib/args.mjs'
+import { EXCLUDED_DIRS, IGNORED_CLASS_NAMES, IGNORED_CLASS_PREFIXES } from './lib/constants.mjs'
 
-const args = process.argv.slice(2)
-const rootArg = args.find((arg) => !arg.startsWith('--')) || '.'
-const root = path.resolve(rootArg)
-const failOnUnused = args.includes('--fail-on-unused')
-
-const excludedDirs = new Set([
-  '.agents',
-  '.git',
-  '.output',
-  '.slidev',
-  '.vite',
-  'coverage',
-  'dist',
-  'node_modules',
-  'playwright-report',
-  'test-results',
-])
-
-const ignoredClassNames = new Set([
-  'dark',
-  'light',
-  'print',
-  'slidev-code',
-  'slidev-content',
-  'slidev-drawing',
-  'slidev-layout',
-  'slidev-note',
-  'slidev-page',
-  'slidev-presenter',
-  'slidev-route',
-  'slidev-slide-container',
-  'slidev-vclick-target',
-  'v-after',
-  'v-click',
-  'v-click-hidden',
-  'v-clicks',
-])
-
-const ignoredPrefixes = [
-  'cm-',
-  'hljs',
-  'iconify',
-  'katex',
-  'language-',
-  'mermaid',
-  'monaco',
-  'router-',
-  'shiki',
-  'slidev-',
-]
-
-function walk(dir, files = []) {
-  for (const entry of readdirSync(dir)) {
-    if (excludedDirs.has(entry)) continue
-    const full = path.join(dir, entry)
-    const stat = statSync(full)
-    if (stat.isDirectory()) {
-      walk(full, files)
-    } else if (/\.(css|vue|md|mdx)$/.test(entry)) {
-      files.push(full)
-    }
-  }
-  return files
+const rawArgs = process.argv.slice(2)
+if (rawArgs.includes('-h') || rawArgs.includes('--help')) {
+  console.error('Usage: node scripts/class-usage-scan.mjs <deck-root> [--fail-on-unused]')
+  process.exit(0)
 }
+
+const { root, options } = parseArgs(rawArgs)
+const failOnUnused = options['fail-on-unused']
 
 function stripCssComments(text) {
   return text.replace(/\/\*[\s\S]*?\*\//g, '')
@@ -98,8 +45,8 @@ function cssClassNames(css) {
 }
 
 function isIgnoredClass(name) {
-  if (ignoredClassNames.has(name)) return true
-  return ignoredPrefixes.some((prefix) => name.startsWith(prefix))
+  if (IGNORED_CLASS_NAMES.has(name)) return true
+  return IGNORED_CLASS_PREFIXES.some((prefix) => name.startsWith(prefix))
 }
 
 function escapeRegExp(value) {
@@ -135,7 +82,7 @@ function isUsed(name, usageText, dynamicPrefixes) {
   return token.test(usageText)
 }
 
-const files = walk(root)
+const files = walk(root, EXCLUDED_DIRS, /\.(css|vue|md|mdx)$/)
 const styleSources = []
 const usageTexts = []
 

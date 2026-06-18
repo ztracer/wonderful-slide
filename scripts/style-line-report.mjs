@@ -1,42 +1,20 @@
 #!/usr/bin/env node
-import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import { walk } from './lib/walk.mjs'
+import { parseArgs } from './lib/args.mjs'
+import { EXCLUDED_DIRS } from './lib/constants.mjs'
 
-const args = process.argv.slice(2)
-const rootArg = args.find((arg) => !arg.startsWith('--')) || '.'
-const root = path.resolve(rootArg)
-const limitArg = args.find((arg) => arg.startsWith('--limit='))
-const warnArg = args.find((arg) => arg.startsWith('--warn='))
-const limit = limitArg ? Number(limitArg.split('=')[1]) : 40
-const warnAt = warnArg ? Number(warnArg.split('=')[1]) : 400
-
-const excludedDirs = new Set([
-  '.agents',
-  '.git',
-  '.output',
-  '.slidev',
-  '.vite',
-  'coverage',
-  'dist',
-  'node_modules',
-  'playwright-report',
-  'test-results',
-])
-
-function walk(dir, files = []) {
-  for (const entry of readdirSync(dir)) {
-    if (excludedDirs.has(entry)) continue
-    const full = path.join(dir, entry)
-    const stat = statSync(full)
-    if (stat.isDirectory()) {
-      walk(full, files)
-    } else if (entry.endsWith('.css') || entry.endsWith('.vue')) {
-      files.push(full)
-    }
-  }
-  return files
+const rawArgs = process.argv.slice(2)
+if (rawArgs.includes('-h') || rawArgs.includes('--help')) {
+  console.error('Usage: node scripts/style-line-report.mjs <deck-root> [--limit=<n>] [--warn=<n>]')
+  process.exit(0)
 }
+
+const { root, options } = parseArgs(rawArgs)
+const limit = options.limit !== undefined ? Number(options.limit) : 40
+const warnAt = options.warn !== undefined ? Number(options.warn) : 400
 
 function lineCount(text) {
   if (!text) return 0
@@ -60,7 +38,7 @@ function vueStyleBlocks(file, text) {
 }
 
 const rows = []
-for (const file of walk(root)) {
+for (const file of walk(root, EXCLUDED_DIRS, /\.(css|vue)$/)) {
   const text = readFileSync(file, 'utf8')
   if (file.endsWith('.css')) {
     rows.push({

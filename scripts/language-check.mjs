@@ -1,60 +1,18 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import { walk } from './lib/walk.mjs'
+import { parseArgs, usage } from './lib/args.mjs'
+import { EXCLUDED_DIRS, EXCLUDED_FILES } from './lib/constants.mjs'
 
 const rawArgs = process.argv.slice(2)
-
-function parseArgs(args) {
-  const options = {}
-  let root = '.'
-  let rootSet = false
-
-  for (let index = 0; index < args.length; index += 1) {
-    const arg = args[index]
-    if (arg.startsWith('--')) {
-      const [name, inlineValue] = arg.slice(2).split('=', 2)
-      if (inlineValue !== undefined) {
-        options[name] = inlineValue
-      } else {
-        const next = args[index + 1]
-        if (next && !next.startsWith('--')) {
-          options[name] = next
-          index += 1
-        } else {
-          options[name] = true
-        }
-      }
-      continue
-    }
-
-    if (!rootSet) {
-      root = arg
-      rootSet = true
-    }
-  }
-
-  return { root: path.resolve(root), options }
+if (rawArgs.includes('-h') || rawArgs.includes('--help')) {
+  console.error(usage('node scripts/language-check.mjs <deck-root>', ['[--range <pages>]', '[--fail-on-findings]']))
+  process.exit(0)
 }
 
-const excludedDirs = new Set([
-  '.agents',
-  '.git',
-  '.output',
-  '.slidev',
-  '.slidev-export-check',
-  '.vite',
-  'coverage',
-  'dist',
-  'node_modules',
-  'playwright-report',
-  'test-results',
-])
-
-const excludedFiles = new Set([
-  'index.md',
-  'README.md',
-])
+const { root, options } = parseArgs(rawArgs)
 
 const lineRules = [
   {
@@ -142,24 +100,6 @@ const lineRules = [
 
 const possibilityTerms = ['可能', '可以', '适合', '理论上']
 const choiceTerms = ['当前', '本工作', '我们实现', '这里选择']
-
-function usage() {
-  console.error('Usage: node scripts/language-check.mjs <deck-root> [--range <pages>] [--fail-on-findings]')
-}
-
-function walk(dir, files = []) {
-  for (const entry of readdirSync(dir)) {
-    if (excludedDirs.has(entry)) continue
-    const full = path.join(dir, entry)
-    const stat = statSync(full)
-    if (stat.isDirectory()) {
-      walk(full, files)
-    } else if (!excludedFiles.has(entry) && /\.(md|mdx|vue)$/.test(entry)) {
-      files.push(full)
-    }
-  }
-  return files
-}
 
 function parseRange(range) {
   const selected = new Set()
@@ -433,11 +373,13 @@ function scanSource(source, findings, seen) {
 }
 
 function allSources(root) {
-  return walk(root).map((file) => ({
-    file: path.relative(root, file),
-    text: readFileSync(file, 'utf8'),
-    lineOffset: 0,
-  }))
+  return walk(root, EXCLUDED_DIRS, /\.(md|mdx|vue)$/)
+    .filter((file) => !EXCLUDED_FILES.has(path.basename(file)))
+    .map((file) => ({
+      file: path.relative(root, file),
+      text: readFileSync(file, 'utf8'),
+      lineOffset: 0,
+    }))
 }
 
 function rangeSources(root, range) {
@@ -462,13 +404,6 @@ function rangeSources(root, range) {
       text: lines.slice(slide.start, slide.end + 1).join('\n'),
       lineOffset: slide.start,
     }))
-}
-
-const { root, options } = parseArgs(rawArgs)
-
-if (options.help || options.h) {
-  usage()
-  process.exit(0)
 }
 
 if (!existsSync(root)) {

@@ -2,6 +2,8 @@
 
 Use this gate when writing or revising slide titles, visible copy, speaker notes, Survey/Related Work slides, contribution slides, and method-choice slides.
 
+**Design note on pattern granularity**: Chinese rewrite triggers target specific constructions (并不是、与其...不如...、需要注意的是) because these are precise, high-frequency idioms in Chinese technical writing that reliably signal defensive or evasive prose. English triggers use broader patterns (not/but, however, therefore) because English defensive writing has too many syntactic variants to enumerate. The broader English patterns are calibrated to catch the category while keeping false positives manageable.
+
 ## Core Standard
 
 - State the claim directly. Do not spend the first sentence defending why the claim is allowed.

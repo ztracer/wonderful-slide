@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { existsSync, mkdirSync, copyFileSync, readdirSync, statSync } from 'node:fs'
 import { execSync } from 'node:child_process'
+import process from 'node:process'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -10,8 +11,39 @@ const __dirname = dirname(__filename)
 // Get package root directory
 const packageRoot = join(__dirname, '..')
 
-// User's Claude skills directory
-const skillsDir = join(process.env.HOME || process.env.USERPROFILE, '.claude', 'skills')
+// Determine target platform from --target flag
+const args = process.argv.slice(2)
+const targetArg = args.find(a => a.startsWith('--target='))
+const target = targetArg ? targetArg.split('=')[1] : 'claude'
+
+if (args.includes('--help') || args.includes('-h')) {
+  console.log('Usage: node scripts/install.mjs [--target=<platform>]')
+  console.log()
+  console.log('Install the wonderful-slide skill for your AI coding tool.')
+  console.log()
+  console.log('Options:')
+  console.log('  --target=claude     Install for Claude Code (default)')
+  console.log('  --target=opencode   Install for OpenCode')
+  console.log('  --target=custom:<path>  Install to a custom directory')
+  process.exit(0)
+}
+
+const PLATFORM_DIRS = {
+  claude: join(process.env.HOME || process.env.USERPROFILE, '.claude', 'skills'),
+  opencode: join(process.env.HOME || process.env.USERPROFILE, '.agents', 'skills'),
+}
+
+let skillsDir
+if (target.startsWith('custom:')) {
+  skillsDir = target.slice(7)
+} else if (PLATFORM_DIRS[target]) {
+  skillsDir = PLATFORM_DIRS[target]
+} else {
+  console.error(`Unknown target: ${target}`)
+  console.error(`Valid targets: claude, opencode, custom:<path>`)
+  process.exit(1)
+}
+
 const targetDir = join(skillsDir, 'wonderful-slide')
 
 function copyRecursiveSync(src, dest) {
@@ -31,7 +63,7 @@ function copyRecursiveSync(src, dest) {
   }
 }
 
-console.log('🚀 Installing wonderful-slide skill for Claude Code...')
+console.log(`🚀 Installing wonderful-slide skill for ${target}...`)
 console.log()
 
 // Check if skills directory exists
@@ -66,7 +98,7 @@ console.log()
 console.log('📍 Skill installed at:', targetDir)
 console.log()
 console.log('🎯 Next steps:')
-console.log('   1. Restart Claude Code')
+console.log('   1. Restart your AI coding tool')
 console.log('   2. Use the skill: "Create a new technical presentation using wonderful-slide"')
 console.log()
 console.log('📖 Documentation:')
