@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'scripts/**'
       - 'bin/**'
@@ -11,7 +11,7 @@ on:
       - 'package.json'
       - '.github/workflows/ci.yml'
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   script-health:
